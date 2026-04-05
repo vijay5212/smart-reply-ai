@@ -1,14 +1,9 @@
-# Use Java 21
-FROM eclipse-temurin:21-jdk
+FROM maven:3.9.9-eclipse-temurin-21
 
-# Set working directory
 WORKDIR /app
 
-# Copy all files
 COPY . .
 
-# Build project
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Run jar
 CMD ["java", "-jar", "target/replaytool-0.0.1-SNAPSHOT.jar"]
