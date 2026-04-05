@@ -163,23 +163,21 @@ public class ReplyController {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
            // return response.body();
-           ObjectMapper mapper = new ObjectMapper();
+          ObjectMapper mapper = new ObjectMapper();
 JsonNode root = mapper.readTree(response.body());
 
-System.out.println(response.body());
+JsonNode choicesNode = root.path("choices");
 
-if (root.has("error")) {
-    return "API Error:\n" + root.path("error").path("message").asText();
+if (choicesNode.isArray() && choicesNode.size() > 0) {
+
+    JsonNode messageNode = choicesNode.get(0).path("message");
+    String content = messageNode.path("content").asText();
+
+    return content;
+
+} else {
+    return "Error: No response\n" + response.body();
 }
-
-String content = root
-        .path("choices")
-        .path(0)
-        .path("message")
-        .path("content")
-        .asText();
-
-return content.isEmpty() ? "No reply generated" : content;
 
         } catch (Exception e) {
             return "Error: " + e.getMessage();
