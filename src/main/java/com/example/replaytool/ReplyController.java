@@ -122,7 +122,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://smart-replay-frontend.onrender.com")
+// @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class ReplyController {
 
